@@ -249,9 +249,10 @@ class PopoverTooltip extends React.PureComponent<Props, State> {
 
     const labelContainerStyle = this.props.labelContainerStyle;
     const borderStyle =
-      labelContainerStyle && labelContainerStyle.backgroundColor
-        ? { borderTopColor: labelContainerStyle.backgroundColor }
-        : null;
+      labelContainerStyle && labelContainerStyle.backgroundColor ? {
+        borderTopColor: labelContainerStyle.backgroundColor,
+        borderBottomColor: labelContainerStyle.backgroundColor
+      } : null;
     let triangleDown = null;
     let triangleUp = null;
     if (this.state.tooltipTriangleDown) {
@@ -285,7 +286,7 @@ class PopoverTooltip extends React.PureComponent<Props, State> {
         onPress={this.toggle.bind(this)}
         activeOpacity={1.0}
       >
-        <Animated.View style={componentWrapperStyle}>
+        <Animated.View style={this.props.componentWrapperStyle}>
           {this.props.buttonComponent}
         </Animated.View>
         <Modal
@@ -453,7 +454,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 10,
     borderBottomWidth: 0,
     borderLeftWidth: 10,
-    borderTopColor: 'white',
+    borderTopColor: 'transparent',
     borderRightColor: 'transparent',
     borderBottomColor: 'transparent',
     borderLeftColor: 'transparent',
@@ -467,7 +468,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 10,
     borderBottomWidth: 10,
     borderLeftWidth: 10,
-    borderBottomColor: 'white',
+    borderBottomColor: 'transparent',
     borderTopColor: 'transparent',
     borderRightColor: 'transparent',
     borderLeftColor: 'transparent',
