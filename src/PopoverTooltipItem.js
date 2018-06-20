@@ -43,7 +43,7 @@ class PopoverTooltipItem extends React.PureComponent<Props> {
 
   render() {
     const label = typeof this.props.label === 'string'
-      ? <Text accessibilityLabel={this.props.label.replace(/\n/g, ' ') + '\nToque duas vezes para continuar.'} style={this.props.labelStyle}>{this.props.label}</Text>
+      ? <Text accessibilityLabel={this.props.label.replace(/\n/g, ' ')} style={this.props.labelStyle}>{this.props.label}</Text>
       : this.props.label();
     return (
       <View style={[styles.itemContainer, this.props.containerStyle]}>
