@@ -26,6 +26,7 @@ type Props = {
   label: Label,
   containerStyle: ?StyleObj,
   labelStyle: ?StyleObj,
+  accessibilityLabel : PropTypes.string,
 };
 class PopoverTooltipItem extends React.PureComponent<Props> {
 
@@ -35,6 +36,7 @@ class PopoverTooltipItem extends React.PureComponent<Props> {
     label: labelPropType.isRequired,
     containerStyle: ViewPropTypes.style,
     labelStyle: Text.propTypes.style,
+    accessibilityLabel: PropTypes.string,
   };
   static defaultProps = {
     labelStyle: null,
@@ -43,7 +45,7 @@ class PopoverTooltipItem extends React.PureComponent<Props> {
 
   render() {
     const label = typeof this.props.label === 'string'
-      ? <Text accessibilityLabel={this.props.label.replace(/\n/g, ' ')} style={this.props.labelStyle}>{this.props.label}</Text>
+      ? <Text accessibilityLabel={this.props.accessibilityLabel} style={this.props.labelStyle}>{this.props.label}</Text>
       : this.props.label();
     return (
       <View style={[styles.itemContainer, this.props.containerStyle]}>

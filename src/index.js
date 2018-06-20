@@ -239,6 +239,7 @@ class PopoverTooltip extends React.PureComponent<Props, State> {
         <PopoverTooltipItem
           key={index}
           label={item.label}
+          accessibilityLabel={item.accessibilityLabel}
           onPressUserCallback={item.onPress}
           onPress={this.onPressItem}
           containerStyle={classes}
@@ -294,7 +295,7 @@ class PopoverTooltip extends React.PureComponent<Props, State> {
           onRequestClose={this.props.onRequestClose}
           transparent
         >
-          <View style={{flex: 1}} accessible={true} accessibilityLabel={(this.props.accessibilityLabel || '')}>
+          <View style={{flex: 1}} accessible={true} accessibilityLabel={this.props.accessibilityLabel}>
             <TouchableOpacity style={{flex: 1}} onPress={this.toggle}>
               <Animated.View style={[
                 styles.overlay,
