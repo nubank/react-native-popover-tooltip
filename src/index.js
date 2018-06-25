@@ -239,6 +239,7 @@ class PopoverTooltip extends React.PureComponent<Props, State> {
         <PopoverTooltipItem
           key={index}
           label={item.label}
+          accessibilityLabel={item.accessibilityLabel}
           onPressUserCallback={item.onPress}
           onPress={this.onPressItem}
           containerStyle={classes}
@@ -294,61 +295,65 @@ class PopoverTooltip extends React.PureComponent<Props, State> {
           onRequestClose={this.props.onRequestClose}
           transparent
         >
-          <Animated.View style={[
-            styles.overlay,
-            this.props.overlayStyle,
-            { opacity: this.state.opacity },
-          ]}>
-            <TouchableOpacity
-              activeOpacity={1}
-              focusedOpacity={1}
-              style={styles.button}
-              onPress={this.toggle}
-            >
-              <Animated.View
-                style={[
-                  styles.tooltipContainer,
-                  this.props.tooltipContainerStyle,
-                  tooltipContainerStyle,
-                ]}
-              >
-                <View
-                  onLayout={this.onInnerContainerLayout}
-                  style={styles.innerContainer}
+          <View style={{flex: 1}} accessible={true} accessibilityLabel={this.props.accessibilityLabel}>
+            <TouchableOpacity style={{flex: 1}} onPress={this.toggle}>
+              <Animated.View style={[
+                styles.overlay,
+                this.props.overlayStyle,
+                { opacity: this.state.opacity },
+              ]}>
+                <TouchableOpacity
+                  activeOpacity={1}
+                  focusedOpacity={1}
+                  style={styles.button}
+                  onPress={this.toggle}
                 >
-                  {triangleUp}
-                  <View style={[
-                    styles.allItemContainer,
-                    this.props.tooltipContainerStyle,
-                  ]}>
-                    {items}
-                  </View>
-                  {triangleDown}
-                </View>
+                  <Animated.View
+                    style={[
+                      styles.tooltipContainer,
+                      this.props.tooltipContainerStyle,
+                      tooltipContainerStyle,
+                    ]}
+                  >
+                    <View
+                      onLayout={this.onInnerContainerLayout}
+                      style={styles.innerContainer}
+                    >
+                      {triangleUp}
+                      <View style={[
+                        styles.allItemContainer,
+                        this.props.tooltipContainerStyle,
+                      ]}>
+                        {items}
+                      </View>
+                      {triangleDown}
+                    </View>
+                  </Animated.View>
+                </TouchableOpacity>
+              </Animated.View>
+              <Animated.View style={{
+                position: 'absolute',
+                left: this.state.x,
+                top: this.state.y,
+                width: this.state.width,
+                height: this.state.height,
+                backgroundColor: 'transparent',
+                opacity: this.state.buttonComponentOpacity, // At the first frame, the button will be rendered
+                                                            // in the top-left corner. So we dont render it
+                                                            // until its position has been calculated.
+                transform: [
+                  { scale: this.state.buttonComponentContainerScale },
+                ],
+              }}>
+                <TouchableOpacity
+                  onPress={this.toggle}
+                  activeOpacity={1.0}
+                >
+                  {this.props.buttonComponent}
+                </TouchableOpacity>
               </Animated.View>
             </TouchableOpacity>
-          </Animated.View>
-          <Animated.View style={{
-            position: 'absolute',
-            left: this.state.x,
-            top: this.state.y,
-            width: this.state.width,
-            height: this.state.height,
-            backgroundColor: 'transparent',
-            opacity: this.state.buttonComponentOpacity, // At the first frame, the button will be rendered
-                                                        // in the top-left corner. So we dont render it
-                                                        // until its position has been calculated.
-            transform: [
-              { scale: this.state.buttonComponentContainerScale },
-            ],
-          }}>
-            <TouchableOpacity
-              onPress={this.toggle}
-              activeOpacity={1.0}
-            >
-              {this.props.buttonComponent}
-            </TouchableOpacity>
-          </Animated.View>
+          </View>
         </Modal>
       </TouchableOpacity>
     );
