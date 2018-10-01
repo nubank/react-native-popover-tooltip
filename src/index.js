@@ -35,6 +35,7 @@ type Props = {
   labelSeparatorColor: string,
   labelStyle?: StyleObj,
   setAbove: bool,
+  showTooltipOnMount?: bool,
   animationType?: "timing" | "spring",
   onRequestClose: () => void,
   triangleOffset: number,
@@ -81,6 +82,7 @@ class PopoverTooltip extends React.PureComponent<Props, State> {
     labelSeparatorColor: PropTypes.string,
     labelStyle: Text.propTypes.style,
     setAbove: PropTypes.bool,
+    showTooltipOnMount: PropTypes.bool,
     animationType: PropTypes.oneOf([ "timing", "spring" ]),
     onRequestClose: PropTypes.func,
     triangleOffset: PropTypes.number,
@@ -98,6 +100,7 @@ class PopoverTooltip extends React.PureComponent<Props, State> {
     labelSeparatorColor: "#E1E1E1",
     onRequestClose: () => {},
     setAbove: false,
+    showTooltipOnMount: false,
     delayLongPress: 100,
     triangleOffset: 0,
   };
@@ -131,6 +134,12 @@ class PopoverTooltip extends React.PureComponent<Props, State> {
       outputRange: [1, 0],
     });
     this.setState({ oppositeOpacity: newOppositeOpacity });
+  }
+
+  componentDidMount() {
+    if (this.props.showTooltipOnMount) {
+      this.openModal();
+    }
   }
 
   toggleModal = () => {
@@ -349,7 +358,7 @@ class PopoverTooltip extends React.PureComponent<Props, State> {
                   onPress={this.toggle}
                   activeOpacity={1.0}
                 >
-                  {this.props.buttonComponent}
+                  {/* {this.props.buttonComponent} */}
                 </TouchableOpacity>
               </Animated.View>
             </TouchableOpacity>
