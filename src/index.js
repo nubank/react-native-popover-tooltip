@@ -15,6 +15,7 @@ import {
   Text,
   Easing,
   ViewPropTypes,
+  InteractionManager,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import invariant from 'invariant';
@@ -138,7 +139,7 @@ class PopoverTooltip extends React.PureComponent<Props, State> {
 
   componentDidMount() {
     if (this.props.showTooltipOnMount) {
-      setTimeout(this.openModal, 1000);
+      InteractionManager.runAfterInteractions(this.openModal);
     }
   }
 
