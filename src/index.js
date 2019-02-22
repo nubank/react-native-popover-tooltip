@@ -138,7 +138,7 @@ class PopoverTooltip extends React.PureComponent<Props, State> {
 
   componentDidMount() {
     if (this.props.showTooltipOnMount) {
-      this.openModal();
+      setTimeout(this.openModal, 1000);
     }
   }
 
